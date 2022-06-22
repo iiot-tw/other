@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        
+        <title>javascript: calculate two numbers</title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script>
+function getRandom(x){
+    return Math.floor(Math.random()*x);
+}
+
+function start()
+{
+	var nn1 = getRandom(50);
+	var nn2 = getRandom(50);
+
+	document.getElementById('result').value = "";
+	//document.getElementById('opr').value  = "1";
+	//document.getElementById('cnt').innerHTML = 1;
+	var op = getRandom(2);
+	
+	if (op == 1){
+		document.getElementById('opr').value  = "+";
+		document.getElementById('n1').value = nn1;
+		document.getElementById('n2').value = nn2;		
+	}
+	else{
+		document.getElementById('opr').value  = "-";
+		document.getElementById('n1').value = Math.max(nn1,nn2);
+		document.getElementById('n2').value = Math.min(nn1,nn2);
+	}
+	
+	document.getElementById("result").focus();
+}
+function calc()
+{
+	
+	var n1 = parseFloat(document.getElementById('n1').value);
+	var n2 = parseFloat(document.getElementById('n2').value);
+	var res= parseFloat(document.getElementById('result').value);
+	var op = document.getElementById('opr').value;
+	var check;
+	
+	var cnt = parseFloat(document.getElementById('cnt').innerHTML);
+	var gd = parseFloat(document.getElementById('gd').innerHTML);
+	var ng = parseFloat(document.getElementById('ng').innerHTML);
+
+	if (op == "+")
+		if (res == n1+n2) check=true;
+		else check=false;
+	else if (op == "-")
+		if (res == n1-n2) check=true;
+		else check=false;
+	else
+		alert("unknown operator");
+	
+	if (check){
+		document.getElementById('his').innerHTML+='<font color="#00FF00">'+n1+op+n2+"="+res+"</font><br>";
+		document.getElementById('gd').innerHTML=++gd;
+		document.getElementById('reward').setAttribute("style","left:"+gd*20+"pt;");
+	}
+	else{
+		document.getElementById('his').innerHTML+='<font color="#FF0000">'+n1+op+n2+"="+res+"</font><br>";
+		document.getElementById('ng').innerHTML=++ng;
+	}
+
+	
+	if (cnt<10)
+	{
+		cnt++;
+		document.getElementById('cnt').innerHTML = cnt;	
+		start();
+	}
+	else
+	{
+		document.querySelector('#cal').disabled=true;
+		document.getElementById('scr').innerHTML = "Score: "+parseFloat(document.getElementById('gd').innerHTML)/(parseFloat(document.getElementById('ng').innerHTML)+parseFloat(document.getElementById('gd').innerHTML))*100;
+	}
+}
+		</script>
+		<style>
+			body {background-color: #ffff80;}
+			input {font-size:3em; width:100px; text-align:right;}
+			button {font-size:3em; width:100px;}
+			#opr {font-size:2em; width:50px; text-align:center;}
+			#his {font-size:0.8em;}
+			#reward {width:30pt; height:30pt; position:relative; z-index:1; top:50pt}
+			#target {width:150pt; position:absolute; left:250pt;}
+		</style>
+    </head>
+    <body onload="start()">
+		<input type="text" id="n1"></input>
+		<input type="text" id="opr"></input>
+        <input type="text" id="n2"></input>
+        <button onclick="calc();" id="cal">=</button>
+        <input type="number" id="result"/>
+		<div id="reward"><img width="100%" src="https://img.heho.com.tw/wp-content/uploads/2020/05/3d61e50b6c3efa3552d447c96cc97fe3-scaled.jpg"></div>
+		<div id="target" ><img width="100%" src="https://obs.line-scdn.net/0hGN00ES6xGGENSQ-ilwJnNjUfFBA-LwJoLy9SV3hKQ1J1ZV41ZCtLAngbRU0pKwtjLSoEASAbR1V0cQ1gMw/w1200"></div>
+        <div id="gd">0</div><div id="ng">0</div>
+        <div id="cnt">1</div><div id="scr"></div>
+		<div id="his"></div>
+<script>
+// Get the input field
+var input = document.getElementById("result");
+
+// Execute a function when the user presses a key on the keyboard
+input.addEventListener("keypress", function(event) {
+  // If the user presses the "Enter" key on the keyboard
+  if (event.key === "Enter") {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    document.getElementById("cal").click();
+  }
+});
+</script>
+    </body>
+</html>
